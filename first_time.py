@@ -1,7 +1,7 @@
-import csv, new_user
+import csv, reg_login
 
-users_data = open("users_data.csv", 'w')
-users_data_writer = csv.writer(users_data, delimiter=',')
-users_data_writer.writerow(['Username', 'Password'])
-
-new_user.user_reg()
+def first_time():
+    users_data = open("users_data.csv", 'w')
+    users_data_writer = csv.writer(users_data, delimiter=',')
+    users_data_writer.writerow(['Username', 'Password'])
+    reg_login.user_reg()
