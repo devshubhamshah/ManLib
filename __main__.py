@@ -1,4 +1,5 @@
-import csv, first_time
+import csv, reg_login
 
-if #username.csv does not exist:
-    #first_time.first_time()
+#reg_login.reg_login()
+reg_login.existing_up()
+reg_login.login()

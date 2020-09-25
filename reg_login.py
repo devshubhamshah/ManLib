@@ -1,14 +1,35 @@
 import csv, getpass
 
-users_data_file = open("users_data.csv", 'r')
-users_data_reader = csv.reader(users_data_file)
-users_data_writer = csv.writer(users_data_file)
-unames = []
-pwords = []
+def reg_login():
+    try:
+        users_data_file = open("users_data.csv", 'r')
+    except FileNotFoundError:
+        users_data = open("users_data.csv", 'w', newline='')
+        users_data_writer = csv.writer(users_data, delimiter=',')
+        users_data_writer.writerow(['Username', 'Password'])
+        print("Please create an account.")
+        uname = input("Please choose an username\n:: ")
+        pword = getpass.getpass("Please choose a password for your account\n:: ")
+        record = [uname, pword]
+        users_data_writer.writerow(record)
 
-for row in users_data_reader:
-    unames.append(row[0])
-    pwords.append(row[1])
+        lib_file_name = uname + ".csv"
+        lib_file = open(lib_file_name, 'w', newline='')
+        lib_file_writer = csv.writer(lib_file, delimiter=',')
+        lib_file_writer.writerow(['Title','Author','Genre','Status'])
+        lib_file.close()
+
+def existing_up():
+    users_data_file = open("users_data.csv", 'r')
+    users_data_reader = csv.reader(users_data_file)
+    users_data_writer = csv.writer(users_data_file)
+    global unames, pwords
+    unames = []
+    pwords = []
+
+    for row in users_data_reader:
+        unames.append(row[0])
+        pwords.append(row[1])
 
 def user_reg():
     print("Please create an account.")
@@ -42,6 +63,3 @@ def login():
             print("Wrong username.")
     else:
         print("3 unsuccessful attempts to login. Please try again later.")
-
-#user_reg()
-#login()
