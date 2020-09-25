@@ -3,6 +3,7 @@ import csv, getpass
 def reg_login():
     try:
         users_data_file = open("users_data.csv", 'r')
+        users_data_file.close()
     except FileNotFoundError:
         users_data = open("users_data.csv", 'w', newline='')
         users_data_writer = csv.writer(users_data, delimiter=',')
