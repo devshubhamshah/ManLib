@@ -20,10 +20,10 @@ def reg_login():
         lib_file.close()
 
 def existing_up():
+    global unames, pwords, users_data_writer, users_data_reader
     users_data_file = open("users_data.csv", 'r')
     users_data_reader = csv.reader(users_data_file)
     users_data_writer = csv.writer(users_data_file)
-    global unames, pwords
     unames = []
     pwords = []
 
