@@ -3,10 +3,12 @@ import csv, getpass
 users_data_file = open("users_data.csv", 'r')
 users_data_reader = csv.reader(users_data_file)
 users_data_writer = csv.writer(users_data_file)
-unames, pwords = []
+unames = []
+pwords = []
+
 for row in users_data_reader:
-    unames += row[0]
-    pwords += row[1]
+    unames.append(row[0])
+    pwords.append(row[1])
 
 def user_reg():
     print("Please create an account.")
@@ -15,7 +17,8 @@ def user_reg():
         print("Please select a different username.")
         uname = input("Please choose an username\n:: ")
     pword = getpass.getpass("Please choose a password for your account\n:: ")
-    users_data_writer.writerow([uname, pword])
+    record = [uname, pword]
+    users_data_writer.writerow(record)
 
     lib_file_name = uname + ".csv"
     lib_file = open(lib_file_name, 'w')
@@ -23,7 +26,7 @@ def user_reg():
     lib_file_writer.writerow(['Title','Author','Genre','Status'])
     lib_file.close()
 
-def login(uname, pword):
+def login():
     print("login")
     for attempts in range(3):
         print("Enter your login details below.")
@@ -39,3 +42,6 @@ def login(uname, pword):
             print("Wrong username.")
     else:
         print("3 unsuccessful attempts to login. Please try again later.")
+
+#user_reg()
+#login()
