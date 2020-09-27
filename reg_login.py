@@ -57,6 +57,8 @@ def login():
             pword = getpass.getpass("Please enter your password\n:: ")
             if pword == pwords[unames.index(uname)]:
                 print("Login Successful.")
+                global name_of_user
+                name_of_user = uname
                 break
             else:
                 print("Wrong password. Please try again.")
@@ -64,3 +66,5 @@ def login():
             print("Wrong username.")
     else:
         print("3 unsuccessful attempts to login. Please try again later.")
+
+name_user = name_of_user
