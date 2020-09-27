@@ -18,6 +18,10 @@ def add_book(file_user_writer):
             print("Enter valid number.")
             book_status = 'not-set'
     global add_book
-    add_book = [book_title, book_author, book_genre, book_status])
+    add_book = [book_title, book_author, book_genre, book_status]
 
 book_add = add_book
+
+def del_book():
+    delete = input("Name of the book to be deleted:")
+    
