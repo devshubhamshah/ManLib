@@ -17,4 +17,7 @@ def add_book(file_user_writer):
         else:
             print("Enter valid number.")
             book_status = 'not-set'
-    file_user_writer.writerow([book_title, book_author, book_genre, book_status])
+    global add_book
+    add_book = [book_title, book_author, book_genre, book_status])
+
+book_add = add_book
