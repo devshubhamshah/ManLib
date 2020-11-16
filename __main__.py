@@ -1,51 +1,147 @@
-import csv, reg_login
+import csv, getpass
 
-reg_login.reg_login()
-reg_login.existing_up()
-reg_login.login()
-user_file_name = reg_login.name_user + '.csv'
-file_user = open(user_file_name, 'a+')
-file_user_writer = csv.writer(file_user, delimiter = ',')
-file_user_reader = csv.reader(file_user)
+def reg_login():
+    try:
+        users_data_file = open("users_data.csv", 'r')
+        users_data_file.close()
+    except FileNotFoundError:
+        users_data = open("users_data.csv", 'w', newline='')
+        users_data_writer = csv.writer(users_data, delimiter=',')
+        users_data_writer.writerow(['Username', 'Password'])
+        print("Please create an account.")
+        uname = input("Please choose an username\n:: ")
+        pword = getpass.getpass("Please choose a password for your account\n:: ")
+        record = [uname, pword]
+        users_data_writer.writerow(record)
 
-def add_book(file_user_writer):
+        lib_file_name = uname + ".csv"
+        lib_file = open(lib_file_name, 'w', newline='')
+        lib_file_writer = csv.writer(lib_file, delimiter=',')
+        lib_file_writer.writerow(['Title','Author','Genre','Status'])
+        lib_file.close()
+
+def existing_up():
+    global unames, pwords, users_data_writer, users_data_reader
+    users_data_file = open("users_data.csv", 'r')
+    users_data_reader = csv.reader(users_data_file)
+    users_data_writer = csv.writer(users_data_file)
+    unames = []
+    pwords = []
+
+    for row in users_data_reader:
+        unames.append(row[0])
+        pwords.append(row[1])
+
+def user_reg():
+    print("Please create an account.")
+    uname = input("Please choose an username\n:: ")
+    while uname in unames:
+        print("Please select a different username.")
+        uname = input("Please choose an username\n:: ")
+    pword = getpass.getpass("Please choose a password for your account\n:: ")
+    record = [uname, pword]
+    users_data_writer.writerow(record)
+
+    lib_file_name = uname + ".csv"
+    lib_file = open(lib_file_name, 'w')
+    lib_file_writer = csv.writer(lib_file, delimiter=',')
+    lib_file_writer.writerow(['Title','Author','Genre','Status'])
+    lib_file.close()
+
+def login():
+    print("login")
+    for attempts in range(3):
+        print("Enter your login details below.")
+        uname = input("Please enter your username\n:: ")
+        if uname in unames:
+            pword = getpass.getpass("Please enter your password\n:: ")
+            if pword == pwords[unames.index(uname)]:
+                print("Login Successful.")
+                global name_of_user
+                name_of_user = uname 
+                break
+            else:
+                print("Wrong password. Please try again.")
+        else:
+            print("Wrong username.")
+    else:
+        print("3 unsuccessful attempts to login. Please try again later.")
+
+def add_book():
     book_title = input("Name of book: ")
     book_author = input("Name of author: ")
     #book_pages = input("Number of pages: ")
     book_genre = input("Genre of the book: ")
-    book_status = input("Enter your choice:\n1. Read 2. Reading 3. To-Be Read")
-    while book_status == 'not-set':
-        if book_status == '1':
+    book_status_num = input("Enter your choice:\n1. Read 2. Reading 3. To-Be Read\nstatus: ")
+    book_status = ''
+    while True:
+        if book_status_num == '1':
             book_status = 'Read'
-        elif book_status == '2':
+            break
+        elif book_status_num == '2':
             book_status = 'Reading'
-        elif book_status == '3':
+            break
+        elif book_status_num == '3':
             book_status = 'To-Be Read'
+            break
         else:
             print("Enter valid number.")
-            book_status = 'not-set'
+            book_status_num == 'not-set'
     add_book = [book_title, book_author, book_genre, book_status]
     file_user_writer.writerow(add_book)
 
-def del_book(mod_book):
-    #delete = input("Name of the book to be deleted: ")
-    records = []
+def search_book(search_book):
+    global book_exists
     for row in file_user_reader:
-        if row[0] == mod_book:
-            pass
-        else:
-            records.append(row)
-    file_user_writer.writerow(records)
+        if search_book == row[0]:
+            print(row)
+            book_exists = 'yes'
+            break
+    else:
+        print("No such book found, you sick fuck!")
+        book_exists = 'no'
 
-def edit_book():
+def del_book(mod_book):
+    search_book(mod_book)
+    if book_exists == 'yes':
+        records = []
+        for row in file_user_reader:
+            if row[0] == mod_book:
+                pass
+            else:
+                records.append(row)
+        file_user_writer.writerow(records)
+    else:
+        print("No such book found in library, you idiot!")
+
+def update_book(mod_book):
     del_book(mod_book)
     add_book()
 
-def search_book():
-    for row in file_user_reader:
-        
-    
 
-    
+reg_login()
+existing_up()
+name_of_user = ''
+login()
+user_file_name = name_of_user + '.csv'
+file_user = open(user_file_name, 'a+')
+file_user_writer = csv.writer(file_user, delimiter = ',')
+file_user_reader = csv.reader(file_user)
+book_exists = ''
+while True:            
+    crud = int(input("Please select:\n\t0. Exit\n\t1. Create\n\t2. Search\n\t3. Update\n\t4. Delete\nchoice: "))
 
-    
+    if crud == 0:
+        file_user.close()
+        break
+    elif crud == 1:
+        add_book()
+    elif crud == 2:
+        book_to_search = input("Enter name of book to search for: ")
+        search_book(book_to_search)
+    elif crud == 3:
+        book_to_update = input("Enter name of book to update: ")
+        update_book(book_to_update)
+    elif crud == 4:
+        book_to_delete = input("Enter name of book to delete: ")
+        del_book(book_to_delete)

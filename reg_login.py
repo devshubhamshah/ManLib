@@ -48,6 +48,7 @@ def user_reg():
     lib_file_writer.writerow(['Title','Author','Genre','Status'])
     lib_file.close()
 
+name_of_user = ''
 def login():
     print("login")
     for attempts in range(3):
@@ -58,7 +59,7 @@ def login():
             if pword == pwords[unames.index(uname)]:
                 print("Login Successful.")
                 global name_of_user
-                name_of_user = uname
+                name_of_user = uname 
                 break
             else:
                 print("Wrong password. Please try again.")
@@ -67,4 +68,3 @@ def login():
     else:
         print("3 unsuccessful attempts to login. Please try again later.")
 
-name_user = name_of_user
