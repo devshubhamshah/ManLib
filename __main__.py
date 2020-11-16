@@ -98,7 +98,7 @@ def search_book(search_book):
             book_exists = 'yes'
             break
     else:
-        print("No such book found, you sick fuck!")
+        print("No such book found!")
         book_exists = 'no'
 
 def del_book(mod_book):
@@ -126,7 +126,7 @@ login()
 user_file_name = name_of_user + '.csv'
 file_user = open(user_file_name, 'a+')
 file_user_writer = csv.writer(file_user, delimiter = ',')
-file_user_reader = csv.reader(file_user)
+file_user_reader = csv.reader(file_user, delimiter = ',')
 book_exists = ''
 while True:            
     crud = int(input("Please select:\n\t0. Exit\n\t1. Create\n\t2. Search\n\t3. Update\n\t4. Delete\nchoice: "))
