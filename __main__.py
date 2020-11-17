@@ -95,15 +95,15 @@ def search_book(search_book):
     for row in file_user_reader:
         if search_book == row[0]:
             print(row)
-            book_exists = 'yes'
+            book_exists = True
             break
     else:
         print("No such book found!")
-        book_exists = 'no'
+        book_exists = False
 
 def del_book(mod_book):
     search_book(mod_book)
-    if book_exists == 'yes':
+    if book_exists:
         records = []
         for row in file_user_reader:
             if row[0] == mod_book:
