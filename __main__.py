@@ -68,6 +68,8 @@ def login():
         print("3 unsuccessful attempts to login. Please try again later.")
 
 def add_book():
+    file_user = open(user_file_name, 'a')
+    file_user_writer = csv.writer(file_user, delimiter = ',')
     book_title = input("Name of book: ")
     book_author = input("Name of author: ")
     #book_pages = input("Number of pages: ")
@@ -89,9 +91,12 @@ def add_book():
             book_status_num == 'not-set'
     add_book = [book_title, book_author, book_genre, book_status]
     file_user_writer.writerow(add_book)
+    file_user.close()
 
 def search_book(search_book):
     global book_exists
+    file_user = open(user_file_name, 'r')
+    file_user_reader = csv.reader(file_user, delimiter = ',')
     for row in file_user_reader:
         if search_book == row[0]:
             print(row)
@@ -100,9 +105,13 @@ def search_book(search_book):
     else:
         print("No such book found!")
         book_exists = False
+    file_user.close()
 
 def del_book(mod_book):
     search_book(mod_book)
+    file_user = open(user_file_name, 'r+')
+    file_user_writer = csv.writer(file_user, delimiter = ',')
+    file_user_reader = csv.reader(file_user, delimiter = ',')
     if book_exists:
         records = []
         for row in file_user_reader:
@@ -113,6 +122,7 @@ def del_book(mod_book):
         file_user_writer.writerow(records)
     else:
         print("No such book found in library, you idiot!")
+    file_user.close()
 
 def update_book(mod_book):
     del_book(mod_book)
@@ -124,15 +134,15 @@ existing_up()
 name_of_user = ''
 login()
 user_file_name = name_of_user + '.csv'
-file_user = open(user_file_name, 'a+')
-file_user_writer = csv.writer(file_user, delimiter = ',')
-file_user_reader = csv.reader(file_user, delimiter = ',')
-book_exists = ''
-while True:            
-    crud = int(input("Please select:\n\t0. Exit\n\t1. Create\n\t2. Search\n\t3. Update\n\t4. Delete\nchoice: "))
 
+book_exists = ''
+
+while True:
+    try:
+        crud = int(input("Please select:\n\t0. Exit\n\t1. Create\n\t2. Search\n\t3. Update\n\t4. Delete\nchoice: "))
+    except:
+        print("Invalid choice.")
     if crud == 0:
-        file_user.close()
         break
     elif crud == 1:
         add_book()
@@ -145,3 +155,5 @@ while True:
     elif crud == 4:
         book_to_delete = input("Enter name of book to delete: ")
         del_book(book_to_delete)
+    else:
+        print("Invalid choice.")
