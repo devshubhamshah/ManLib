@@ -49,16 +49,19 @@ def user_reg():
     lib_file.close()
 
 def login():
-    print("login")
-    for attempts in range(3):
+    print("================== login ==================")
+    attempts = 0
+    while attempts <= 3:
+        attempts += 1
         print("Enter your login details below.")
         uname = input("Please enter your username\n:: ")
         if uname in unames:
             pword = getpass.getpass("Please enter your password\n:: ")
             if pword == pwords[unames.index(uname)]:
-                print("Login Successful.")
                 global name_of_user
-                name_of_user = uname 
+                name_of_user = uname
+                print("================== successful ==================")
+                print("Welcome!")
                 break
             else:
                 print("Wrong password. Please try again.")
@@ -72,7 +75,6 @@ def add_book():
     file_user_writer = csv.writer(file_user, delimiter = ',')
     book_title = input("Name of book: ")
     book_author = input("Name of author: ")
-    #book_pages = input("Number of pages: ")
     book_genre = input("Genre of the book: ")
     book_status_num = input("Enter your choice:\n1. Read 2. Reading 3. To-Be Read\nstatus: ")
     book_status = ''
@@ -128,6 +130,7 @@ def update_book(mod_book):
     del_book(mod_book)
     add_book()
 
+print("================== MANLIB ==================")
 reg_login()
 existing_up()
 name_of_user = ''
@@ -142,6 +145,7 @@ while True:
     except:
         print("Invalid choice.")
     if crud == 0:
+        print("So long..!\n==================")
         break
     elif crud == 1:
         add_book()
@@ -156,3 +160,4 @@ while True:
         del_book(book_to_delete)
     else:
         print("Invalid choice.")
+    print("==================")
