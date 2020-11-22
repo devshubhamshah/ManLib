@@ -71,7 +71,7 @@ def login():
         print("3 unsuccessful attempts to login. Please try again later.")
 
 def add_book():
-    file_user = open(user_file_name, 'a')
+    file_user = open(user_file_name, 'a', newline='')
     file_user_writer = csv.writer(file_user, delimiter = ',')
     book_title = input("Name of book: ")
     book_author = input("Name of author: ")
@@ -92,7 +92,7 @@ def add_book():
             print("Enter valid number.")
             book_status_num == 'not-set'
     add_book = [book_title, book_author, book_genre, book_status]
-    file_user_writer.writerow(add_book, lineterminator = '\n')
+    file_user_writer.writerow(add_book)
     file_user.close()
 
 def search_book(search_book):
