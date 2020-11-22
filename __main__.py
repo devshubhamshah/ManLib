@@ -158,7 +158,7 @@ while True:
             del_book(book_to_delete)
         else:
             print("Invalid choice.")
-        print("==================")
+            print("==================")
     except:
         print("Invalid choice.")
     
