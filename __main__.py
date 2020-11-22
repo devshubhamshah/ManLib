@@ -145,20 +145,20 @@ while True:
         if crud == 0:
         print("So long..!\n==================")
         break
-    elif crud == 1:
-        add_book()
-    elif crud == 2:
-        book_to_search = input("Enter name of book to search for: ")
-        search_book(book_to_search)
-    elif crud == 3:
-        book_to_update = input("Enter name of book to update: ")
-        update_book(book_to_update)
-    elif crud == 4:
-        book_to_delete = input("Enter name of book to delete: ")
-        del_book(book_to_delete)
-    else:
-        print("Invalid choice.")
-    print("==================")
+        elif crud == 1:
+            add_book()
+        elif crud == 2:
+            book_to_search = input("Enter name of book to search for: ")
+            search_book(book_to_search)
+        elif crud == 3:
+            book_to_update = input("Enter name of book to update: ")
+            update_book(book_to_update)
+        elif crud == 4:
+            book_to_delete = input("Enter name of book to delete: ")
+            del_book(book_to_delete)
+        else:
+            print("Invalid choice.")
+        print("==================")
     except:
         print("Invalid choice.")
     
