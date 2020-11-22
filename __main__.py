@@ -111,8 +111,7 @@ def search_book(search_book):
 
 def del_book(mod_book):
     search_book(mod_book)
-    file_user = open(user_file_name, 'r+')
-    file_user_writer = csv.writer(file_user, delimiter = ',')
+    file_user = open(user_file_name, 'r')
     file_user_reader = csv.reader(file_user, delimiter = ',')
     if book_exists:
         records = []
@@ -121,7 +120,10 @@ def del_book(mod_book):
                 pass
             else:
                 records.append(row)
-        file_user_writer.writerow(records)
+        file_user.close()
+        file_user = open(user_file_name, 'w')
+        file_user_writer = csv.writer(file_user, delimiter = ',')
+        file_user_writer.writerows(records)
     else:
         print("No such book found in library, you idiot!")
     file_user.close()
