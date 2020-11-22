@@ -92,7 +92,7 @@ def add_book():
             print("Enter valid number.")
             book_status_num == 'not-set'
     add_book = [book_title, book_author, book_genre, book_status]
-    file_user_writer.writerow(add_book)
+    file_user_writer.writerow(add_book, lineterminator = '\n')
     file_user.close()
 
 def search_book(search_book):
