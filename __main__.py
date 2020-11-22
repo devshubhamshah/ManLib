@@ -143,6 +143,7 @@ book_exists = ''
 
 while True:
     try:
+        print("==================")
         crud = int(input("Please select:\n\t0. Exit\n\t1. Create\n\t2. Search\n\t3. Update\n\t4. Delete\nchoice: "))
         if crud == 0:
             print("So long..!\n==================")
