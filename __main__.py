@@ -71,7 +71,7 @@ def login():
         print("3 unsuccessful attempts to login. Please try again later.")
 
 def add_book():
-    file_user = open(user_file_name, 'a', newline='')
+    file_user = open(user_file_name, 'a', newline = '')
     file_user_writer = csv.writer(file_user, delimiter = ',')
     book_title = input("Name of book: ")
     book_author = input("Name of author: ")
@@ -117,16 +117,17 @@ def del_book(mod_book):
         records = []
         for row in file_user_reader:
             if row[0] == mod_book:
-                pass
+                continue
             else:
                 records.append(row)
         file_user.close()
-        file_user = open(user_file_name, 'w')
+        file_user = open(user_file_name, 'w', newline = '')
         file_user_writer = csv.writer(file_user, delimiter = ',')
         file_user_writer.writerows(records)
+        file_user.close()
     else:
         print("No such book found in library, you idiot!")
-    file_user.close()
+    
 
 def update_book(mod_book):
     del_book(mod_book)
