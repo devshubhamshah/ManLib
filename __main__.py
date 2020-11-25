@@ -125,13 +125,12 @@ def del_book(mod_book):
         file_user_writer = csv.writer(file_user, delimiter = ',')
         file_user_writer.writerows(records)
         file_user.close()
-    else:
-        print("No such book found in library, you idiot!")
     
 
 def update_book(mod_book):
     del_book(mod_book)
-    add_book()
+    if book_exists:
+        add_book()
 
 print("================== MANLIB ==================")
 reg_login()
