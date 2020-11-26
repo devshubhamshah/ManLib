@@ -128,9 +128,31 @@ def del_book(mod_book):
     
 
 def update_book(mod_book):
-    del_book(mod_book)
+   # del_book(mod_book)
+   # if book_exists:
+   #     add_book()
+    search_book(mod_book)
     if book_exists:
-        add_book()
+        to_update = int(input("0.Exit 1.Author 2.Genre 3.Status: "))
+        file_user = open(user_file_name, 'r', newline = '')
+        file_user_reader = csv.reader(file_user, delimiter = ',')
+        for book in file_user_reader:
+            if book[0] == mod_book:
+                row = book
+            
+        if to_update == 0:
+            return
+        elif to_update == 1:
+            new_auth = input("new author name: ")
+            row[1] = new_auth
+            print(row)
+            return row
+            
+        elif to_update == 2:
+            pass
+        elif to_update == 3:
+            pass
+        file_user.close()
 
 print("================== MANLIB ==================")
 reg_login()
@@ -155,7 +177,11 @@ while True:
             search_book(book_to_search)
         elif crud == 3:
             book_to_update = input("Enter name of book to update: ")
-            update_book(book_to_update)
+            file_user = open(user_file_name, 'a', newline = '')
+            file_user_writer = csv.writer(file_user, delimiter = ',')
+            file_user_writer.writerow(update_book(book_to_update))
+            file_user.close()
+            del_book(book_to_update)
         elif crud == 4:
             book_to_delete = input("Enter name of book to delete: ")
             del_book(book_to_delete)
