@@ -154,6 +154,33 @@ def update_book(mod_book):
             pass
         file_user.close()
 
+def data_print():
+    file_user = open(user_file_name, 'r', newline = '')
+    file_user_reader = csv.reader(file_user, delimiter = ',')
+    data = []
+    for row in file_user_reader:
+        data.append(row)
+    header = data.pop(0)
+    def fixed(text,length):
+        if len(text) > length:
+            text = text[:length]
+        elif len(text) < length:
+            text = (text + ' ' * length)[:length]
+        return text
+    print('#'*100)
+    print('', end = ' ')
+    for col in header:
+        print(fixed(col,30), end = ' ')
+    print()
+    print('#'*100)
+    for row in data:
+        print('', end = ' ')
+        for col in row:
+            print(fixed(col,30), end = ' ')
+        print()
+    print('#'*100)
+    file_user.close()
+
 print("================== MANLIB ==================")
 reg_login()
 existing_up()
@@ -166,7 +193,7 @@ book_exists = ''
 while True:
     try:
         print("==================")
-        crud = int(input("Please select:\n\t0. Exit\n\t1. Create\n\t2. Search\n\t3. Update\n\t4. Delete\nchoice: "))
+        crud = int(input("Please select:\n\t0. Exit\n\t1. Create\n\t2. Search\n\t3. Update\n\t4. Delete\n\t5. Whole data\nchoice: "))
         if crud == 0:
             print("So long..!\n==================")
             break
@@ -185,6 +212,8 @@ while True:
         elif crud == 4:
             book_to_delete = input("Enter name of book to delete: ")
             del_book(book_to_delete)
+        elif crud == 5:
+            data_print()
         else:
             print("Invalid choice.")
             print("==================")
