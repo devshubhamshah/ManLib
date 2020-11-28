@@ -1,4 +1,6 @@
-import csv, getpass
+import csv, getpass, sys
+from time import sleep
+from os import system, name
 from tabulate import tabulate
 
 def reg_login():
@@ -196,7 +198,7 @@ def welcome():
     while True:
         cred = int(input("0. Exit 1.Login 2.New account: "))
         if cred == 0:
-            break
+            sys.exit()
         elif cred == 1:
             global user_file_name, name_of_user
             user_file_name = name_of_user + '.csv'         
@@ -206,18 +208,44 @@ def welcome():
             user_reg()
             print("Please login after creating account.")
 
+def clear():
+        # for windows 
+    if name == 'nt': 
+        _ = system('cls')  
+    # for mac and linux(here, os.name is 'posix') 
+    else: 
+        _ = system('clear') 
 
+def progress(count, total, status=''):
+    bar_len = 60
+    filled_len = int(round(bar_len * count / float(total)))
+
+    percents = round(100.0 * count / float(total), 1)
+    bar = '=' * filled_len + '-' * (bar_len - filled_len)
+
+    sys.stdout.write('[%s] %s%s ...%s\r' % (bar, percents, '%', status))
+    sys.stdout.flush()
+
+def splash_screen():
+    print("================== MANLIB ==================")
+    loaded = 0
+    total = 101
+    while loaded < total:
+        progress(loaded, total)
+        loaded += 1
+    print(' ')
+    #clear()
 
 user_file_name = ' '
 name_of_user = ''
+splash_screen()
 welcome()
-
 book_exists = ''
 
 while True:
     try:
         print("==================")
-        crud = int(input("Please select:\n\t0. Exit\n\t1. Create\n\t2. Search\n\t3. Update\n\t4. Delete\n\t5. Whole data\nchoice: "))
+        crud = int(input("Please select:\n\t0. Exit\n\t1. Create\n\t2. Search\n\t3. Update\n\t4. Delete\n\t5. Entire library\nchoice: "))
         if crud == 0:
             print("So long..!\n==================")
             break
@@ -242,5 +270,5 @@ while True:
             print("Invalid choice.")
             print("==================")
     except:
-        print("Invalid choice.")
+        print("except Invalid choice.")
     
