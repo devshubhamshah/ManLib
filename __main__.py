@@ -1,4 +1,5 @@
 import csv, getpass
+from tabulate import tabulate
 
 def reg_login():
     try:
@@ -183,25 +184,7 @@ def data_print():
     for row in file_user_reader:
         data.append(row)
     header = data.pop(0)
-    def fixed(text,length):
-        if len(text) > length:
-            text = text[:length]
-        elif len(text) < length:
-            text = (text + ' ' * length)[:length]
-        return text
-    print('_'*100)
-    print(' ')
-    print('', end = ' ')
-    for col in header:
-        print(fixed(col,30), end = ' ')
-    print()
-    print('-'*100)
-    for row in data:
-        print('', end = ' ')
-        for col in row:
-            print(fixed(col,30), end = ' ')
-        print()
-    print('_'*100)
+    print(tabulate(data, header, tablefmt="pretty"))
     file_user.close()
 
 
