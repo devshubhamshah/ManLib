@@ -204,12 +204,29 @@ def data_print():
     print('_'*100)
     file_user.close()
 
-print("================== MANLIB ==================")
-reg_login()
-existing_up()
+
+def welcome():
+    print("================== MANLIB ==================")
+    reg_login()
+    existing_up()
+    cred = ' '
+    while True:
+        cred = int(input("0. Exit 1.Login 2.New account"))
+        if cred == 0:
+            break
+        elif cred == 1:
+            global user_file_name, name_of_user
+            user_file_name = name_of_user + '.csv'         
+            login()
+            
+        elif cred == 2:
+            user_reg()
+
+
+
+user_file_name = ' '
 name_of_user = ''
-login()
-user_file_name = name_of_user + '.csv'
+welcome()
 
 book_exists = ''
 
