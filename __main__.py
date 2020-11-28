@@ -133,25 +133,47 @@ def update_book(mod_book):
    #     add_book()
     search_book(mod_book)
     if book_exists:
-        to_update = int(input("0.Exit 1.Author 2.Genre 3.Status: "))
+        to_update = int(input("0.Exit 1.Title 2.Author 3.Genre 4.Status: "))
         file_user = open(user_file_name, 'r', newline = '')
         file_user_reader = csv.reader(file_user, delimiter = ',')
         for book in file_user_reader:
             if book[0] == mod_book:
                 row = book
-            
         if to_update == 0:
             return
         elif to_update == 1:
+            new_title = input("new title: ")
+            row[0] = new_title
+            print(row)
+            return row
+        elif to_update == 2:
             new_auth = input("new author name: ")
             row[1] = new_auth
             print(row)
-            return row
-            
-        elif to_update == 2:
-            pass
+            return row        
         elif to_update == 3:
-            pass
+            new_genre = input("new genre: ")
+            row[2] = new_genre
+            print(row)
+            return row
+        elif to_update == 4:
+            new_book_status_num = input("Enter your choice:\n1. Read 2. Reading 3. To-Be Read\nstatus: ")
+            while True:
+                if new_book_status_num == '1':
+                    book_status = 'Read'
+                    break
+                elif new_book_status_num == '2':
+                    book_status = 'Reading'
+                    break
+                elif new_book_status_num == '3':
+                    book_status = 'To-Be Read'
+                    break
+                else:
+                    print("Enter valid number.")
+                    new_book_status_num == 'not-set'
+            row[3] = book_status
+            print(row)
+            return row
         file_user.close()
 
 def data_print():
@@ -167,18 +189,19 @@ def data_print():
         elif len(text) < length:
             text = (text + ' ' * length)[:length]
         return text
-    print('#'*100)
+    print('_'*100)
+    print(' ')
     print('', end = ' ')
     for col in header:
         print(fixed(col,30), end = ' ')
     print()
-    print('#'*100)
+    print('-'*100)
     for row in data:
         print('', end = ' ')
         for col in row:
             print(fixed(col,30), end = ' ')
         print()
-    print('#'*100)
+    print('_'*100)
     file_user.close()
 
 print("================== MANLIB ==================")
