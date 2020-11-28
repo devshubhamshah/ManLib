@@ -194,16 +194,17 @@ def welcome():
     existing_up()
     cred = ' '
     while True:
-        cred = int(input("0. Exit 1.Login 2.New account"))
+        cred = int(input("0. Exit 1.Login 2.New account:\n"))
         if cred == 0:
             break
         elif cred == 1:
             global user_file_name, name_of_user
             user_file_name = name_of_user + '.csv'         
             login()
-            
+            break
         elif cred == 2:
             user_reg()
+            print("Please login after creating account.")
 
 
 
