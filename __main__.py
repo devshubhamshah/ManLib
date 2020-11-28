@@ -194,7 +194,7 @@ def welcome():
     existing_up()
     cred = ' '
     while True:
-        cred = int(input("0. Exit 1.Login 2.New account:\n"))
+        cred = int(input("0. Exit 1.Login 2.New account: "))
         if cred == 0:
             break
         elif cred == 1:
