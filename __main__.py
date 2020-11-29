@@ -186,7 +186,7 @@ def data_print():
     for row in file_user_reader:
         data.append(row)
     header = data.pop(0)
-    print(tabulate(data, header, tablefmt="pretty"))
+    print(tabulate(data, header, tablefmt = "pretty"))
     file_user.close()
 
 
@@ -198,11 +198,12 @@ def welcome():
     while True:
         cred = int(input("0. Exit 1.Login 2.New account: "))
         if cred == 0:
+            print("So long!")
             sys.exit()
         elif cred == 1:
+            login()
             global user_file_name, name_of_user
             user_file_name = name_of_user + '.csv'         
-            login()
             break
         elif cred == 2:
             user_reg()
@@ -216,26 +217,27 @@ def clear():
     else: 
         _ = system('clear') 
 
-def progress(count, total, status=''):
-    bar_len = 60
-    filled_len = int(round(bar_len * count / float(total)))
-
-    percents = round(100.0 * count / float(total), 1)
-    bar = '=' * filled_len + '-' * (bar_len - filled_len)
-
-    sys.stdout.write('[%s] %s%s ...%s\r' % (bar, percents, '%', status))
-    sys.stdout.flush()
+def progress():
+    loaded = 0
+    total = 100
+    while loaded <= 100:
+        clear()
+        print("================== MANLIB ==================")
+        print("...loading...")
+        bar = str("[" + "="*loaded + "-"*(total - loaded) + "]")
+        print(bar)
+        sleep(1)
+        loaded += 10
+    else:
+        clear()
+        return
 
 def splash_screen():
     print("================== MANLIB ==================")
-    loaded = 0
-    total = 101
-    while loaded < total:
-        progress(loaded, total)
-        loaded += 1
-    print(' ')
-    #clear()
+    progress()
+    clear()
 
+clear()
 user_file_name = ' '
 name_of_user = ''
 splash_screen()
@@ -269,6 +271,8 @@ while True:
         else:
             print("Invalid choice.")
             print("==================")
-    except:
+
+    except Exception as e:
+        print("error: {}".format(e))
         print("except Invalid choice.")
-    
+        clear()
