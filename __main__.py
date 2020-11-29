@@ -148,16 +148,19 @@ def update_book(mod_book):
             new_title = input("new title: ")
             row[0] = new_title
             print(row)
+            file_user.close()
             return row
         elif to_update == 2:
             new_auth = input("new author name: ")
             row[1] = new_auth
             print(row)
+            file_user.close()
             return row        
         elif to_update == 3:
             new_genre = input("new genre: ")
             row[2] = new_genre
             print(row)
+            file_user.close()
             return row
         elif to_update == 4:
             new_book_status_num = input("Enter your choice:\n1. Read 2. Reading 3. To-Be Read\nstatus: ")
@@ -176,8 +179,8 @@ def update_book(mod_book):
                     new_book_status_num == 'not-set'
             row[3] = book_status
             print(row)
+            file_user.close()
             return row
-        file_user.close()
 
 def data_print():
     file_user = open(user_file_name, 'r', newline = '')
@@ -223,7 +226,7 @@ def progress():
     while loaded <= 100:
         clear()
         print("================== MANLIB ==================")
-        print("...loading...")
+        print(loaded,"%")
         bar = str("[" + "="*loaded + "-"*(total - loaded) + "]")
         print(bar)
         sleep(1)
