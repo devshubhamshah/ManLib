@@ -142,6 +142,7 @@ def update_book(mod_book):
         for book in file_user_reader:
             if book[0] == mod_book:
                 row = book
+        
         to_update = int(input("0.Exit 1.Title 2.Author 3.Genre 4.Status: "))        
         if to_update == 0:
             return
@@ -282,7 +283,7 @@ while True:
             print("Invalid choice.")
             print("==================")
         sleep(2)
-    except: #Exception as e
-        #print("error: {}".format(e))
+    except Exception as e:
+        print("error: {}".format(e))
         print("except Invalid choice.")
         #clear()
