@@ -281,8 +281,8 @@ while True:
         else:
             print("Invalid choice.")
             print("==================")
-
-    except Exception as e:
-        print("error: {}".format(e))
+        sleep(2)
+    except: #Exception as e
+        #print("error: {}".format(e))
         print("except Invalid choice.")
         #clear()
