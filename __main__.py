@@ -16,7 +16,6 @@ def reg_login():
         pword = getpass.getpass("Please choose a password for your account\n:: ")
         record = [uname, pword]
         users_data_writer.writerow(record)
-
         lib_file_name = uname + ".csv"
         lib_file = open(lib_file_name, 'w', newline='')
         lib_file_writer = csv.writer(lib_file, delimiter=',')
@@ -24,18 +23,20 @@ def reg_login():
         lib_file.close()
 
 def existing_up():
-    global unames, pwords, users_data_writer, users_data_reader
+    global unames, pwords, users_data_writer, users_data_reader, users_data_file
     users_data_file = open("users_data.csv", 'r')
     users_data_reader = csv.reader(users_data_file)
-    users_data_writer = csv.writer(users_data_file)
+    #users_data_writer = csv.writer(users_data_file)
     unames = []
     pwords = []
-
     for row in users_data_reader:
         unames.append(row[0])
         pwords.append(row[1])
+    users_data_file.close()
 
 def user_reg():
+    users_data_file = open("users_data.csv", 'a+', newline = '')
+    users_data_writer = csv.writer(users_data_file)
     print("Please create an account.")
     uname = input("Please choose an username\n:: ")
     while uname in unames:
@@ -44,24 +45,25 @@ def user_reg():
     pword = getpass.getpass("Please choose a password for your account\n:: ")
     record = [uname, pword]
     users_data_writer.writerow(record)
-
+    users_data_file.close()
     lib_file_name = uname + ".csv"
-    lib_file = open(lib_file_name, 'w')
+    lib_file = open(lib_file_name, 'w', newline = '') 
     lib_file_writer = csv.writer(lib_file, delimiter=',')
     lib_file_writer.writerow(['Title','Author','Genre','Status'])
     lib_file.close()
+    existing_up()
 
 def login():
+    global name_of_user
     print("================== login ==================")
     attempts = 0
-    while attempts <= 3:
+    while attempts < 3:
         attempts += 1
         print("Enter your login details below.")
         uname = input("Please enter your username\n:: ")
         if uname in unames:
             pword = getpass.getpass("Please enter your password\n:: ")
             if pword == pwords[unames.index(uname)]:
-                global name_of_user
                 name_of_user = uname
                 print("================== successful ==================")
                 print("Welcome!")
@@ -72,6 +74,7 @@ def login():
             print("Wrong username.")
     else:
         print("3 unsuccessful attempts to login. Please try again later.")
+        sys.exit()
 
 def add_book():
     file_user = open(user_file_name, 'a', newline = '')
@@ -136,13 +139,17 @@ def update_book(mod_book):
    #     add_book()
     search_book(mod_book)
     if book_exists:
-        file_user = open(user_file_name, 'a+', newline = '')
+        file_user = open(user_file_name, 'r', newline = '')
         file_user_reader = csv.reader(file_user, delimiter = ',')
-        file_user_writer = csv.writer(file_user, delimiter = ',')
+        #file_user_writer = csv.writer(file_user, delimiter = ',')
+        global updated_row
         for book in file_user_reader:
+            print(book)
             if book[0] == mod_book:
-                row = book
-                print(row)
+                updated_row = book
+                print("row done")
+                print(updated_row)
+                break
             else:
                 print("no")
                 return
@@ -151,25 +158,25 @@ def update_book(mod_book):
             return
         elif to_update == 1:
             new_title = input("new title: ")
-            row[0] = new_title
-            print(row)
-            file_user_writer.writerow(row)
+            updated_row[0] = new_title
+            print(updated_row)
+            #file_user_writer.writerow(row)
             file_user.close()
-            return 
+            #return row
         elif to_update == 2:
             new_auth = input("new author name: ")
-            row[1] = new_auth
-            print(row)
-            file_user_writer.writerow(row)
+            updated_row[1] = new_auth
+            print(updated_row)
+            #file_user_writer.writerow(row)
             file_user.close()
-            return
+            #return row
         elif to_update == 3:
             new_genre = input("new genre: ")
-            row[2] = new_genre
-            print(row)
-            file_user_writer.writerow(row)
+            updated_row[2] = new_genre
+            print(updated_row)
+            #file_user_writer.writerow(row)
             file_user.close()
-            return
+            #return row
         elif to_update == 4:
             new_book_status_num = input("Enter your choice:\n1. Read 2. Reading 3. To-Be Read\nstatus: ")
             while True:
@@ -185,11 +192,11 @@ def update_book(mod_book):
                 else:
                     print("Enter valid number.")
                     new_book_status_num == 'not-set'
-            row[3] = book_status
-            print(row)
-            file_user_writer.writerow(row)
+            updated_row[3] = book_status
+            print(updated_row)
+            #file_user_writer.writerow(row)
             file_user.close()
-            return
+            #return row
 
 
 def data_print():
@@ -256,6 +263,7 @@ name_of_user = ''
 #splash_screen()
 welcome()
 book_exists = ''
+updated_row = ''
 
 while True:
     try:
@@ -272,10 +280,10 @@ while True:
         elif crud == 3:
             book_to_update = input("Enter name of book to update: ")
             update_book(book_to_update)
-            #file_user = open(user_file_name, 'a', newline = '')
-            #file_user_writer = csv.writer(file_user, delimiter = ',')
-            #file_user_writer.writerow(update_book(book_to_update))
-            #file_user.close()
+            file_user = open(user_file_name, 'a', newline = '')
+            file_user_writer = csv.writer(file_user, delimiter = ',')
+            file_user_writer.writerow(updated_row)
+            file_user.close()
             del_book(book_to_update)
         elif crud == 4:
             book_to_delete = input("Enter name of book to delete: ")
@@ -285,7 +293,7 @@ while True:
         else:
             print("Invalid choice.")
             print("==================")
-        sleep(2)
+        #sleep(2)
         print("\n"*3)
     except Exception as e:
         print("error: {}".format(e))
