@@ -146,33 +146,30 @@ def update_book(mod_book):
         for book in file_user_reader:
             print(book)
             if book[0] == mod_book:
-                updated_row = book
+                updated_row.append(book)
                 print("row done")
                 print(updated_row)
                 break
-            else:
-                print("no")
-                return
         to_update = int(input("0.Exit 1.Title 2.Author 3.Genre 4.Status: "))        
         if to_update == 0:
             return
         elif to_update == 1:
             new_title = input("new title: ")
-            updated_row[0] = new_title
+            updated_row[0][0] = new_title
             print(updated_row)
             #file_user_writer.writerow(row)
             file_user.close()
             #return row
         elif to_update == 2:
             new_auth = input("new author name: ")
-            updated_row[1] = new_auth
+            updated_row[0][1] = new_auth
             print(updated_row)
             #file_user_writer.writerow(row)
             file_user.close()
             #return row
         elif to_update == 3:
             new_genre = input("new genre: ")
-            updated_row[2] = new_genre
+            updated_row[0][2] = new_genre
             print(updated_row)
             #file_user_writer.writerow(row)
             file_user.close()
@@ -192,7 +189,7 @@ def update_book(mod_book):
                 else:
                     print("Enter valid number.")
                     new_book_status_num == 'not-set'
-            updated_row[3] = book_status
+            updated_row[0][3] = book_status
             print(updated_row)
             #file_user_writer.writerow(row)
             file_user.close()
@@ -263,7 +260,7 @@ name_of_user = ''
 #splash_screen()
 welcome()
 book_exists = ''
-updated_row = ''
+updated_row = []
 
 while True:
     try:
@@ -282,7 +279,7 @@ while True:
             update_book(book_to_update)
             file_user = open(user_file_name, 'a', newline = '')
             file_user_writer = csv.writer(file_user, delimiter = ',')
-            file_user_writer.writerow(updated_row)
+            file_user_writer.writerows(updated_row)
             file_user.close()
             del_book(book_to_update)
         elif crud == 4:
