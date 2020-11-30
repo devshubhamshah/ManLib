@@ -111,12 +111,13 @@ def add_book():
 
 
 def search_book(search_book):
-    global book_exists
+    global book_exists, update_row
     file_user = open(user_file_name, 'r')
     file_user_reader = csv.reader(file_user, delimiter = ',')
     for row in file_user_reader:
         if search_book == row[0]:
             print(row)
+            update_row = row
             book_exists = True
             break
     else:
@@ -181,7 +182,7 @@ def del_book(mod_book):
 #     search_book(mod_book)
 #     if book_exists:
 #         with open(user_file_name, 'a+', newline='') as file_user:
-#             #file_user = open(user_file_name, 'r', newline = '')
+#             file_user = open(user_file_name, 'r', newline = '')
 #             file_user_reader = csv.reader(file_user, delimiter = ',')
 #             file_user_writer = csv.writer(file_user, delimiter = ',')
 #             for book in file_user_reader:
@@ -241,8 +242,54 @@ def del_book(mod_book):
 #                 #file_user.close()
 #                 return
 
-def update_book():
-    
+def update_book(mod_book):
+    search_book(mod_book)
+    del_book(mod_book)
+    if book_exists:
+        #with open(user_file_name, 'a', newline='') as file_user:
+        #file_user_reader = csv.reader(file_user, delimiter = ',')
+        file_user = open(user_file_name, 'a', newline='')
+        file_user_writer = csv.writer(file_user, delimiter = ',')
+        to_update = int(input("0.Exit 1.Title 2.Author 3.Genre 4.Status: "))
+        if to_update == 0:
+            return
+        elif to_update == 1:
+            new_title = input("Enter new title: ")
+            update_row[0] = new_title.lower()
+            file_user_writer.writerow(update_row)
+            file_user.close()
+        elif to_update == 2:
+            new_author = input("Enter new author: ")
+            update_row[1] = new_author.lower()
+            print(update_row)
+            file_user_writer.writerow(update_row)
+            file_user.close()
+        elif to_update == 3:
+            new_genre = input("Enter new genre: ")
+            update_row[2] = new_genre
+            file_user_writer.writerow(update_row)
+            file_user.close()
+        elif to_update == 4:
+            book_status_num = input("Enter your choice:\n1. Read 2. Reading 3. To-Be Read\nstatus: ")
+            while True:
+                if book_status_num == '1':
+                    book_status = 'read'
+                    break
+                elif book_status_num == '2':
+                    book_status = 'reading'
+                    break
+                elif book_status_num == '3':
+                    book_status = 'to-be-read'
+                    break
+                else:
+                    print("Enter valid number.")
+                    book_status_num == 'not-set'
+            update_row[3] = book_status
+            file_user_writer.writerow(update_row)
+            file_user.close()
+        else:
+            print("invalid choice")
+            return                    
 
 def data_print():
     file_user = open(user_file_name, 'r', newline = '')
@@ -311,7 +358,7 @@ name_of_user = ''
 #splash_screen()
 welcome()
 book_exists = ''
-new_row = []
+update_row = []
 
 
 while True:
@@ -334,7 +381,7 @@ while True:
         #    file_user_writer = csv.writer(file_user, delimiter = ',')
         #    file_user_writer.writerows(updated_row)
         #    file_user.close()
-            del_book(book_to_update)
+            #del_book(book_to_update)
         elif crud == 4:
             book_to_delete = input("Enter name of book to delete: ")
             del_book(book_to_delete)
