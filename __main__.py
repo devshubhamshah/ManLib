@@ -20,7 +20,7 @@ def reg_login():
         lib_file_name = uname + ".csv"
         lib_file = open(lib_file_name, 'w', newline='')
         lib_file_writer = csv.writer(lib_file, delimiter=',')
-        lib_file_writer.writerow(['Title','Author','Genre','Status'])
+        lib_file_writer.writerow(['title','author','genre','status'])
         lib_file.close()
 
 
@@ -103,7 +103,7 @@ def add_book():
         else:
             print("Enter valid number.")
             book_status_num == 'not-set'
-    add_book = [(book_title.lower()).replace(" ", ""), (book_author.lower()).replace(" ", ""), (book_genre.lower()).replace(" ", ""), book_status.lower()]
+    add_book = [(book_title.lower()), (book_author.lower()), (book_genre.lower()), book_status.lower()]
     file_user_writer.writerow(add_book)
     file_user.close()
 
@@ -328,4 +328,3 @@ while True:
         print("except Invalid choice.")
     finally:
         print("\n")
-        
