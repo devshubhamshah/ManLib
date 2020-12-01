@@ -290,9 +290,9 @@ update_row = []
 
 
 while True:
-    print("\n")
     try:
         print("==================")
+        print("\n")
         crud = int(input("Please select:\n\t0. Exit\n\t1. Create\n\t2. Search\n\t3. Update\n\t4. Delete\n\t5. Search Multiple\n\t6. Entire library\nchoice: "))
         if crud == 0:
             print("So long..!\n==================")
@@ -315,9 +315,9 @@ while True:
         else:
             print("Invalid choice.")
             print("==================")
-        print("\n")
     except Exception as e:
         print("error: {}".format(e))
         print("except Invalid choice.")
-        #clear()
+    finally:
+        print("\n")
         
