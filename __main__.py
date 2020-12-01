@@ -8,7 +8,6 @@ def reg_login():
     try:
         users_data_file = open("users_data.csv", 'r')
         users_data_file.close()
-
     except FileNotFoundError:
         users_data = open("users_data.csv", 'w', newline='')
         users_data_writer = csv.writer(users_data, delimiter=',')
@@ -26,13 +25,12 @@ def reg_login():
 
 
 def existing_up():
-    global unames, pwords, users_data_writer, users_data_reader, users_data_file
+    global unames, pwords, users_data_reader, users_data_file
     users_data_file = open("users_data.csv", 'r')
     users_data_reader = csv.reader(users_data_file)
     #users_data_writer = csv.writer(users_data_file)
     unames = []
     pwords = []
-
     for row in users_data_reader:
         unames.append(row[0])
         pwords.append(row[1])
@@ -127,7 +125,7 @@ def search_book(search_book):
 
 
 def search_multiple():
-    search_by = int(input("0. Exit 1.Author 2.Genre 3.Status: "))
+    search_by = int(input("Search by:\n0. Exit 1.Author 2.Genre 3.Status: "))
     file_user = open(user_file_name, 'r')
     file_user_reader = csv.reader(file_user, delimiter = ',')
     reqd_books = []
@@ -173,81 +171,9 @@ def del_book(mod_book):
         file_user.close()
     
 
-# def update_book(mod_book):
-#    # del_book(mod_book)
-#    # if book_exists:
-#    #     add_book()
-#     global new_row
-#     #new_row = list(new_row)
-#     search_book(mod_book)
-#     if book_exists:
-#         with open(user_file_name, 'a+', newline='') as file_user:
-#             file_user = open(user_file_name, 'r', newline = '')
-#             file_user_reader = csv.reader(file_user, delimiter = ',')
-#             file_user_writer = csv.writer(file_user, delimiter = ',')
-#             for book in file_user_reader:
-#                 print(book)
-#                 if book[0] == mod_book:
-#                    #updated_row.append(book)
-#                     print("row done")
-#                     for sec in book:
-#                         new_row.append(sec)
-#                     print(new_row)
-#                     print(type(new_row))
-#                     #new_row = list(new_row) #par new row str hai
-#                     #print(updated_row)
-#                     break
-#             to_update = int(input("0.Exit 1.Title 2.Author 3.Genre 4.Status: "))        
-#             if to_update == 0:
-#                 return
-#             elif to_update == 1:
-#                 new_title = input("new title: ")
-#                 new_row[0]= new_title
-#                 #print(updated_row)
-#                 file_user_writer.writerow(new_row)
-#                 #file_user.close()
-#                 return
-#             elif to_update == 2:
-#                 new_auth = input("new author name: ")
-#                 new_row[1] = new_auth
-#                 #print(updated_row)
-#                 file_user_writer.writerow(new_row)
-#                 #file_user.close()
-#                 return
-#             elif to_update == 3:
-#                 new_genre = input("new genre: ")
-#                 new_row[2] = new_genre
-#                 #print(updated_row)
-#                 file_user_writer.writerow(new_row)
-#                 #file_user.close()
-#                 return
-#             elif to_update == 4:
-#                 new_book_status_num = input("Enter your choice:\n1. Read 2. Reading 3. To-Be Read\nstatus: ")
-#                 while True:
-#                     if new_book_status_num == '1':
-#                         book_status = 'Read'
-#                         break
-#                     elif new_book_status_num == '2':
-#                         book_status = 'Reading'
-#                         break
-#                     elif new_book_status_num == '3':
-#                         book_status = 'To-Be Read'
-#                         break
-#                     else:
-#                         print("Enter valid number.")
-#                         new_book_status_num == 'not-set'
-#                 new_row[3] = book_status
-#                 #print(updated_row)
-#                 file_user_writer.writerow(new_row)
-#                 #file_user.close()
-#                 return
-
 def update_book(mod_book):
-    search_book(mod_book)
     del_book(mod_book)
     if book_exists:
-        #with open(user_file_name, 'a', newline='') as file_user:
-        #file_user_reader = csv.reader(file_user, delimiter = ',')
         file_user = open(user_file_name, 'a', newline='')
         file_user_writer = csv.writer(file_user, delimiter = ',')
         to_update = int(input("0.Exit 1.Title 2.Author 3.Genre 4.Status: "))
@@ -291,6 +217,7 @@ def update_book(mod_book):
             print("invalid choice")
             return                    
 
+
 def data_print():
     file_user = open(user_file_name, 'r', newline = '')
     file_user_reader = csv.reader(file_user, delimiter = ',')
@@ -320,6 +247,7 @@ def welcome():
         elif cred == 2:
             user_reg()
             print("Please login after creating account.")
+
 
 def clear():
         # for windows 
@@ -377,11 +305,6 @@ while True:
         elif crud == 3:
             book_to_update = input("Enter name of book to update: ")
             update_book(book_to_update)
-        #    file_user = open(user_file_name, 'a', newline = '')
-        #    file_user_writer = csv.writer(file_user, delimiter = ',')
-        #    file_user_writer.writerows(updated_row)
-        #    file_user.close()
-            #del_book(book_to_update)
         elif crud == 4:
             book_to_delete = input("Enter name of book to delete: ")
             del_book(book_to_delete)
@@ -392,7 +315,6 @@ while True:
         else:
             print("Invalid choice.")
             print("==================")
-        #sleep(2)
         print("\n")
     except Exception as e:
         print("error: {}".format(e))
