@@ -55,6 +55,7 @@ def user_reg():
     lib_file_writer.writerow(['title','author','genre','status'])
     lib_file.close()
     existing_up()
+    print("================== successful ==================")
 
 
 def login():
@@ -105,7 +106,6 @@ def add_book():
     add_book = [(book_title.lower()).replace(" ", ""), (book_author.lower()).replace(" ", ""), (book_genre.lower()).replace(" ", ""), book_status.lower()]
     file_user_writer.writerow(add_book)
     file_user.close()
-
 
 
 def search_book(search_book):
@@ -218,6 +218,11 @@ def update_book(mod_book):
             return                    
 
 
+def update_complete(mod_book):
+    del_book(mod_book)
+    add_book()
+
+
 def data_print():
     file_user = open(user_file_name, 'r', newline = '')
     file_user_reader = csv.reader(file_user, delimiter = ',')
@@ -283,7 +288,7 @@ def splash_screen():
 clear()
 user_file_name = ' '
 name_of_user = ''
-#splash_screen()
+splash_screen()
 welcome()
 book_exists = ''
 update_row = []
@@ -293,7 +298,7 @@ while True:
     try:
         print("==================")
         print("\n")
-        crud = int(input("Please select:\n\t0. Exit\n\t1. Create\n\t2. Search\n\t3. Update\n\t4. Delete\n\t5. Search Multiple\n\t6. Entire library\nchoice: "))
+        crud = int(input("Please select:\n\t0. Exit\n\t1. Create\n\t2. Search\n\t3. Update\n\t4. Delete\n\t5. Search Multiple\n\t6. Update entire record\n\t7. Entire library\nchoice: "))
         if crud == 0:
             print("So long..!\n==================")
             break
@@ -311,6 +316,9 @@ while True:
         elif crud == 5:
             search_multiple()
         elif crud == 6:
+            book_to_update = input("Enter name of book to update: ")
+            update_complete(book_to_update)
+        elif crud == 7:
             data_print()
         else:
             print("Invalid choice.")
