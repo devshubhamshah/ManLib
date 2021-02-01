@@ -1,7 +1,11 @@
 import csv, getpass, sys
 from time import sleep
 from os import system, name
-from tabulate import tabulate
+try:
+    from tabulate import tabulate
+except ModuleNotFoundError:
+    print('Please install module: tabulate')
+    sys.exit()
 
 
 def reg_login():
@@ -28,7 +32,6 @@ def existing_up():
     global unames, pwords, users_data_reader, users_data_file
     users_data_file = open("users_data.csv", 'r')
     users_data_reader = csv.reader(users_data_file)
-    #users_data_writer = csv.writer(users_data_file)
     unames = []
     pwords = []
     for row in users_data_reader:
@@ -71,7 +74,7 @@ def login():
             if pword == pwords[unames.index(uname)]:
                 name_of_user = uname
                 print("================== successful ==================")
-                print("Welcome!")
+                print("Welcome",uname+'!')
                 break
             else:
                 print("Wrong password. Please try again.")
@@ -324,7 +327,7 @@ while True:
             print("Invalid choice.")
             print("==================")
     except Exception as e:
-        print("error: {}".format(e))
-        print("except Invalid choice.")
+        print("Something went wrong :/")
+        sys.exit()
     finally:
         print("\n")
