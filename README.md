@@ -26,7 +26,7 @@
 
 ## Features and key points
 1. Add serial number, title, authors, genre, cataloging (classifying and indexing materials), read-status
-2. csv
+2. CSV file based
 3. text based or command based
 4. Multi-account support with password
 5. Expressive search functionality
